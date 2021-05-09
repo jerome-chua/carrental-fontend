@@ -19,9 +19,35 @@ export default function CarsLists() {
   console.log("Car LIST:", carList);
 
   return (
-    <div className="container">
-      <div className="row">
-        <div className="col">{}</div>
+    <div className="container-fluid">
+      <div className="row mx-3">
+        {carList.map((car) => (
+          <div className="col-4">
+            <div className="card m-1">
+              <img
+                key={(car.model + car.id).toString()}
+                className="card-img-top"
+                src={car.photo}
+              />
+              <div className="card-body">
+                <h5 className="card-title">{car.model}</h5>
+                <p className="card-text">...</p>
+              </div>
+              <ul className="list-group list-group-flush">
+                <li className="list-group-item">Car availability</li>
+                <li className="list-group-item">Rating: {car.rating}</li>
+                <li className="list-group-item">
+                  Number of Seats: {car.seats}
+                </li>
+              </ul>
+              <div className="card-body">
+                <a href="#" className="card-link">
+                  Rent Car
+                </a>
+              </div>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );
