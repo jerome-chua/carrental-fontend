@@ -13,7 +13,7 @@ export default function Navbar() {
           </button>
         </ul>
         <ul className="align-middle m-2">
-          <a>Manage bookings</a>
+          <a href="#">Manage bookings</a>
         </ul>
       </nav>
     </div>
