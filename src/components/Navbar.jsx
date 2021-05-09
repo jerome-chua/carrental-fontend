@@ -4,7 +4,7 @@ export default function Navbar() {
   return (
     <div>
       <nav id="nav-color" className="navbar justify-content-between">
-        <a className="navbar-brand" href="#">
+        <a className="navbar-brand" href="http://localhost:3004">
           🚗
         </a>
         <ul className="navbar-nav mr-auto">
@@ -13,7 +13,7 @@ export default function Navbar() {
           </button>
         </ul>
         <ul className="align-middle m-2">
-          <a href="#">Manage bookings</a>
+          <a href="http://localhost:3004">Manage bookings</a>
         </ul>
       </nav>
     </div>
