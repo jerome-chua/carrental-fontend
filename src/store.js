@@ -14,7 +14,7 @@ const LOAD_CARS = 'LOAD_CARS';
 const SET_DATES = 'SET_DATES';
 const FILTER_CARS = 'FILTER_CARS';
 const SELECT_CAR = 'SELECT_CAR';
-// const CONFIRM_CAR = 'CONFIRM_CAR'
+const CONFIRM_BOOKING = 'CONFIRM_BOOKING'
 // const CANCEL_BOOKING = 'CANCEL_BOOKING'
 // const UPDATE_BOOKING = 'UPDATE_BOOKING'
 
@@ -24,20 +24,32 @@ export function carListReducer(state, action) {
       return {...state, cars: action.payload}
 
     case SET_DATES:
-      return {...state, 
-        requestedStartDate: action.payload.startDate,
-        requestedEndDate: action.payload.endDate,
+      return {
+        ...state, 
+        requestedStartDate: action.payload.start,
+        requestedEndDate: action.payload.end,
       }
 
+    case SELECT_CAR:
+      return {
+        ...state,
+        selectedCarIdx: action.payload
+      }
+
+    case CONFIRM_BOOKING:
+      return {
+        ...state, 
+        requestedStartDate: action.payload.start,
+        requestedEndDate: action.payload.end,
+        selectedCarIdx: action.payload.carId,
+      }
+
+    // Would need to go into bookings table to do this correctly.
     case FILTER_CARS:
       const filteredList = state.cars.filter((car, i) => action.payload.returnDate < action.payload.requestedStartDate && action.payload.pickupDate > action.payload.requestedEndDate);
       return filteredList;
 
-    case SELECT_CAR:
-      const currentCarId= action.payload.carId;
-      return {...state, currentCarId};
-
-      
+    
     default:
       return state;
   }
@@ -53,12 +65,30 @@ export function loadCarsAction(cars) {
 }
 
 
-export function setDatesAction(start, end) {
+export function setDatesAction(startDate, endDate) {
   return {
     type: SET_DATES,
     payload: {
-      requestedStartDate: start,
-      requestedEndDate: end
+      start: startDate,
+      end: endDate
+    }
+  }
+}
+
+export function selectCarIdxAction(carId) {
+  return {
+    type: SELECT_CAR,
+    payload: carId,
+  }
+}
+
+export function confirmBookingAction(carId, startDate, endDate) {
+  return {
+    type: CONFIRM_BOOKING,
+    payload: {
+      start: startDate,
+      end: endDate,
+      carId: carId,
     }
   }
 }
@@ -84,8 +114,15 @@ const BACKEND_URL = 'http://localhost:3004';
 export function loadCarList(dispatch) {
   axios.get(`${BACKEND_URL}/getcars`)
     .then((res) => {
-      console.log("SEE RES data-----", res.data);
       dispatch(loadCarsAction(res.data));
     }
   )
+}
+
+export function confirmBooking(dispatch, bookingData) {
+  axios.post(`${BACKEND_URL}/booking`, {bookingData})
+    .then(res => {
+      dispatch(confirmBookingAction(bookingData.carId, bookingData.startDate, bookingData.endDate));
+      console.log(res.data);
+    })
 }

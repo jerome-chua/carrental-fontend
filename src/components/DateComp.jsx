@@ -11,13 +11,13 @@ export default function DateComp() {
   const { store, dispatch } = useContext(CarListContext);
 
   const { requestedStartDate, requestedEndDate } = store;
-  console.log("requestedStartDate: ---", requestedStartDate);
-  console.log("requestedEndDate: ---", requestedEndDate);
 
   const setDates = () => {
     dispatch(setDatesAction(startDate, endDate));
     console.log("setDatesAction succesfful!");
   };
+
+  console.log("dates:", requestedStartDate, requestedEndDate);
 
   return (
     <div className="container">
@@ -57,9 +57,13 @@ export default function DateComp() {
             </h4>
           </div>
         </div>
-        <div className="col-12">
-          <button type="button" className="btn btn-primary" onClick={setDates}>
-            Confirm Date Range
+        <div className="col-12 mb-4">
+          <button
+            type="button"
+            className="btn btn-secondary"
+            onClick={setDates}
+          >
+            Filter by Date Range
           </button>
         </div>
       </div>

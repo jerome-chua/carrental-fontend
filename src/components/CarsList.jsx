@@ -1,23 +1,24 @@
 import React, { useEffect, useContext } from "react";
 import { CarListContext, loadCarList } from "../store.js";
-// import CarModal from "./CarModal.jsx";
-// import ModalContent from "./ModalContent.jsx";
+import CarModal from "./CarModal.jsx";
 
 export default function CarsList() {
-  // const [carList, setCarList] = useState([]);
   const { store, dispatch } = useContext(CarListContext);
   const { cars } = store;
 
-  // Filtered dates.
+  const CarContent = ({ car }) => (
+    <div className="mb-3">
+      Car ID: {car.id}
+      <br />
+      Name: {car.model}
+    </div>
+  );
 
-  // This has been refactor to store.js
   useEffect(() => {
     loadCarList(dispatch);
-  }, []);
+  }, [dispatch]);
 
-  console.log("Car LIST:", store.cars);
-
-  // Create a filtered car list here (with the dates).
+  // Create a filtered car list here (with the dates) and then map it below.
 
   return (
     <div className="container-fluid">
@@ -37,14 +38,17 @@ export default function CarsList() {
                 <p className="card-text">...</p>
               </div>
               <ul className="list-group list-group-flush">
-                <li className="list-group-item">Car availability</li>
                 <li className="list-group-item">Rating: {car.rating}</li>
                 <li className="list-group-item">
                   Number of Seats: {car.seats}
                 </li>
               </ul>
               <div className="card-body">
-                <div>Link</div>
+                <div>
+                  <CarModal carId={car.id}>
+                    <CarContent car={car} />
+                  </CarModal>
+                </div>
               </div>
             </div>
           </div>
