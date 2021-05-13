@@ -9,8 +9,6 @@ import {
 } from "../store.js";
 
 // import moment from "moment";
-import axios from "axios";
-const BACKEND_URL = "http://localhost:3004";
 
 export default function CarModal({ children, carId }) {
   const { store, dispatch } = useContext(CarListContext);
@@ -36,49 +34,56 @@ export default function CarModal({ children, carId }) {
 
   const handleBookingData = () => {
     confirmBooking(dispatch, bookingData);
-    setIsVisible(true);
+    dispatch(selectCarIdxAction(null));
+    // const confirmModal = document.querySelector("#confirm-modal");
+    // confirmModal.remove();
+    // setIsVisible(false);
   };
 
   if (isVisible) {
     return (
-      <div className="modal-container">
-        <div className="modal-body">
-          <button
-            className="modal-close btn btn-danger"
-            onClick={() => setIsVisible(false)}
-          >
-            x
-          </button>
-          {children}
-          <div className="row">
-            <div className="col-12">
-              <DatePicker
-                selected={requestedStartDate}
-                onChange={(date) => setStartDate(date)}
-                selectsStart
-                startDate={startDate}
-                endDate={endDate}
-                className="form-control py-4 px-4 shadow-sm input-group my-1"
-              />
-            </div>
-            <div className="col-12">
-              <DatePicker
-                selected={requestedEndDate}
-                onChange={(date) => setEndDate(date)}
-                selectsEnd
-                startDate={startDate}
-                endDate={endDate}
-                minDate={startDate}
-                className="form-control py-4 px-4 shadow-sm input-group my-1"
-              />
-            </div>
-            <div className="col-12">
-              <button
-                className="btn btn-success mt-5"
-                onClick={handleBookingData}
-              >
-                Confirm Booking
-              </button>
+      <div>
+        <button className="btn btn-primary">Rent Car</button>
+        <div className="modal-container">
+          <div className="modal-body">
+            <button
+              className="modal-close btn btn-danger"
+              onClick={() => setIsVisible(false)}
+            >
+              x
+            </button>
+
+            {children}
+            <div className="row">
+              <div className="col-12">
+                <DatePicker
+                  selected={requestedStartDate}
+                  onChange={(date) => setStartDate(date)}
+                  selectsStart
+                  startDate={startDate}
+                  endDate={endDate}
+                  className="form-control py-4 px-4 shadow-sm input-group my-1"
+                />
+              </div>
+              <div className="col-12">
+                <DatePicker
+                  selected={requestedEndDate}
+                  onChange={(date) => setEndDate(date)}
+                  selectsEnd
+                  startDate={startDate}
+                  endDate={endDate}
+                  minDate={startDate}
+                  className="form-control py-4 px-4 shadow-sm input-group my-1"
+                />
+              </div>
+              <div className="col-12">
+                <button
+                  className="btn btn-success mt-5"
+                  onClick={handleBookingData}
+                >
+                  Confirm Booking
+                </button>
+              </div>
             </div>
           </div>
         </div>

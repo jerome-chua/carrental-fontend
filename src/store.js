@@ -123,6 +123,7 @@ export function confirmBooking(dispatch, bookingData) {
   axios.post(`${BACKEND_URL}/booking`, {bookingData})
     .then(res => {
       dispatch(confirmBookingAction(bookingData.carId, bookingData.startDate, bookingData.endDate));
+      
       console.log(res.data);
     })
 }

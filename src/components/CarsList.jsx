@@ -1,16 +1,17 @@
 import React, { useEffect, useContext } from "react";
-import { CarListContext, loadCarList } from "../store.js";
+import { CarListContext, loadCarList, selectCarIdxAction } from "../store.js";
 import CarModal from "./CarModal.jsx";
 
 export default function CarsList() {
   const { store, dispatch } = useContext(CarListContext);
   const { cars } = store;
 
-  const CarContent = ({ car }) => (
+  const CarModalContent = ({ car }) => (
     <div className="mb-3">
-      Car ID: {car.id}
+      <h5>Making booking for:</h5>
+      Name - {car.model}
       <br />
-      Name: {car.model}
+      Car ID - {car.id}
     </div>
   );
 
@@ -46,7 +47,7 @@ export default function CarsList() {
               <div className="card-body">
                 <div>
                   <CarModal carId={car.id}>
-                    <CarContent car={car} />
+                    <CarModalContent car={car} />
                   </CarModal>
                 </div>
               </div>
