@@ -37,12 +37,12 @@ export function carListReducer(state, action) {
       }
 
     case CONFIRM_BOOKING:
-      return {
+      const returnVar = {
         ...state, 
-        requestedStartDate: action.payload.start,
-        requestedEndDate: action.payload.end,
         selectedCarIdx: action.payload.carId,
       }
+
+      return returnVar
 
     // Would need to go into bookings table to do this correctly.
     case FILTER_CARS:
@@ -63,7 +63,6 @@ export function loadCarsAction(cars) {
     payload: cars // Array of All cars.
   }
 }
-
 
 export function setDatesAction(startDate, endDate) {
   return {
@@ -88,7 +87,7 @@ export function confirmBookingAction(carId, startDate, endDate) {
     payload: {
       start: startDate,
       end: endDate,
-      carId: carId,
+      carId: null,
     }
   }
 }
@@ -123,7 +122,7 @@ export function confirmBooking(dispatch, bookingData) {
   axios.post(`${BACKEND_URL}/booking`, {bookingData})
     .then(res => {
       dispatch(confirmBookingAction(bookingData.carId, bookingData.startDate, bookingData.endDate));
-      
+      // Reset the null index here by sending from teh data base a null value.
       console.log(res.data);
     })
 }

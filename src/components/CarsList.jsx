@@ -1,23 +1,33 @@
 import React, { useEffect, useContext } from "react";
-import { CarListContext, loadCarList, selectCarIdxAction } from "../store.js";
+import { CarListContext, loadCarList } from "../store.js";
 import CarModal from "./CarModal.jsx";
 
 export default function CarsList() {
   const { store, dispatch } = useContext(CarListContext);
-  const { cars } = store;
+  const { cars, selectedCarIdx } = store;
 
-  const CarModalContent = ({ car }) => (
-    <div className="mb-3">
-      <h5>Making booking for:</h5>
-      Name - {car.model}
-      <br />
-      Car ID - {car.id}
-    </div>
-  );
+  const CarModalContent = ({ car }) => {
+    if (!selectedCarIdx) {
+      return (
+        <div>
+          <h1>Confirmed</h1>
+        </div>
+      );
+    } else {
+      return (
+        <div className="mb-3">
+          <h5>Making booking for:</h5>
+          Name - {car.model}
+          <br />
+          Car ID - {car.id}
+        </div>
+      );
+    }
+  };
 
   useEffect(() => {
     loadCarList(dispatch);
-  }, [dispatch]);
+  }, []);
 
   // Create a filtered car list here (with the dates) and then map it below.
 

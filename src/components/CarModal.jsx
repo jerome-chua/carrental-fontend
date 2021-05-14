@@ -19,7 +19,6 @@ export default function CarModal({ children, carId }) {
   const [endDate, setEndDate] = useState(new Date("2021/05/10"));
 
   const setCarId = () => {
-    console.log("Check ID ----", carId);
     dispatch(selectCarIdxAction(carId));
     setIsVisible(true);
   };
@@ -35,9 +34,6 @@ export default function CarModal({ children, carId }) {
   const handleBookingData = () => {
     confirmBooking(dispatch, bookingData);
     dispatch(selectCarIdxAction(null));
-    // const confirmModal = document.querySelector("#confirm-modal");
-    // confirmModal.remove();
-    // setIsVisible(false);
   };
 
   if (isVisible) {
